@@ -1,0 +1,12 @@
+{
+  "domain": "pagerdeck",
+  "name": "PagerDeck",
+  "codeowners": ["@GonziTech/pagerdeck"],
+  "config_flow": true,
+  "documentation": "https://github.com/GonziTech/pagerdeck-homeassistant",
+  "integration_type": "service",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/GonziTech/pagerdeck-homeassistant/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

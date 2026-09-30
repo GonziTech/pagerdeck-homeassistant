@@ -1,0 +1,111 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect PagerDeck",
+        "description": "Create an ingest key for a source in the PagerDeck dashboard and paste it here. Alerts sent from Home Assistant arrive on that source.",
+        "data": {
+          "api_key": "Ingest key",
+          "url": "API URL"
+        },
+        "data_description": {
+          "api_key": "The key starts with `src_live_` and is shown once when the source is created.",
+          "url": "Only change this for a self-hosted or local PagerDeck API."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate PagerDeck",
+        "description": "PagerDeck rejected the saved ingest key. Enter a valid ingest key.",
+        "data": {
+          "api_key": "Ingest key"
+        },
+        "data_description": {
+          "api_key": "The key starts with `src_live_` and is shown once when the source is created."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to PagerDeck. Try again later.",
+      "invalid_auth": "The ingest key was not accepted.",
+      "invalid_url": "Enter a URL that starts with http:// or https://.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This ingest key is already configured.",
+      "reauth_successful": "Reauthentication was successful."
+    }
+  },
+  "entity": {
+    "notify": {
+      "alert": {
+        "name": "Alert"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Could not reach PagerDeck. The alert was not sent."
+    },
+    "incident_not_found": {
+      "message": "No open incident exists for this dedup key."
+    },
+    "invalid_auth": {
+      "message": "PagerDeck rejected the ingest key. Reauthenticate the integration."
+    },
+    "invalid_request": {
+      "message": "PagerDeck rejected the request: {message}"
+    },
+    "payment_required": {
+      "message": "The PagerDeck account has no entitlement to send alerts."
+    },
+    "rate_limited": {
+      "message": "PagerDeck is rate limiting this source. Retry after {retry_after} seconds."
+    }
+  },
+  "services": {
+    "send_alert": {
+      "name": "Send alert",
+      "description": "Sends an alert to PagerDeck with severity, tags and an incident key.",
+      "fields": {
+        "message": {
+          "name": "Message",
+          "description": "Body of the alert. Used as the title when no title is set."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Headline of the alert, up to 250 bytes."
+        },
+        "severity": {
+          "name": "Severity",
+          "description": "Proposed urgency. Without it the default of the source applies."
+        },
+        "tags": {
+          "name": "Tags",
+          "description": "Up to 20 tags of at most 64 bytes each."
+        },
+        "dedup_key": {
+          "name": "Dedup key",
+          "description": "Keeps an incident together. While it is open, the same key updates the first alert instead of creating a new one."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Link opened by the app. Only http and https are accepted."
+        },
+        "ttl": {
+          "name": "Time to live",
+          "description": "Delivery deadline and auto-resolve, between 1 second and 30 days."
+        }
+      }
+    },
+    "resolve": {
+      "name": "Resolve incident",
+      "description": "Closes the open incident that was created with this dedup key.",
+      "fields": {
+        "dedup_key": {
+          "name": "Dedup key",
+          "description": "The key the incident was opened with."
+        }
+      }
+    }
+  }
+}

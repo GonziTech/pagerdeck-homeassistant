@@ -1,0 +1,24 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+  "B", "C4", "E", "F", "I", "PIE", "PT", "RET", "RUF", "SIM", "UP", "W",
+  "D", "ASYNC", "TRY", "PERF",
+]
+ignore = [
+  "D203", "D213", "D107", "D105", "D102", "D101", "D100", "D104",
+  "TRY003", "TRY301",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+combine-as-imports = true

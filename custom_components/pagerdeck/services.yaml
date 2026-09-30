@@ -1,0 +1,53 @@
+send_alert:
+  target:
+    entity:
+      integration: pagerdeck
+      domain: notify
+  fields:
+    message:
+      required: true
+      example: "/ is 94% full"
+      selector:
+        text:
+          multiline: true
+    title:
+      example: "Disk full on web-01"
+      selector:
+        text:
+    severity:
+      example: error
+      selector:
+        select:
+          options:
+            - info
+            - warning
+            - error
+            - critical
+    tags:
+      example: '["prod", "disk"]'
+      selector:
+        text:
+          multiple: true
+    dedup_key:
+      example: "web-01:disk"
+      selector:
+        text:
+    url:
+      example: "https://status.example.com/web-01"
+      selector:
+        text:
+          type: url
+    ttl:
+      selector:
+        duration:
+resolve:
+  target:
+    entity:
+      integration: pagerdeck
+      domain: notify
+  fields:
+    dedup_key:
+      required: true
+      example: "web-01:disk"
+      selector:
+        text:

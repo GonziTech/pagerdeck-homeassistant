@@ -1,0 +1,111 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PagerDeck verbinden",
+        "description": "Lege im PagerDeck-Dashboard einen Ingest-Key für eine Quelle an und füge ihn hier ein. Alarme aus Home Assistant landen auf dieser Quelle.",
+        "data": {
+          "api_key": "Ingest-Key",
+          "url": "API-URL"
+        },
+        "data_description": {
+          "api_key": "Der Key beginnt mit `src_live_` und wird einmal angezeigt, wenn die Quelle angelegt wird.",
+          "url": "Nur für eine selbst betriebene oder lokale PagerDeck-API ändern."
+        }
+      },
+      "reauth_confirm": {
+        "title": "PagerDeck erneut authentifizieren",
+        "description": "PagerDeck hat den gespeicherten Ingest-Key abgelehnt. Gib einen gültigen Ingest-Key ein.",
+        "data": {
+          "api_key": "Ingest-Key"
+        },
+        "data_description": {
+          "api_key": "Der Key beginnt mit `src_live_` und wird einmal angezeigt, wenn die Quelle angelegt wird."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zu PagerDeck fehlgeschlagen. Versuche es später erneut.",
+      "invalid_auth": "Der Ingest-Key wurde nicht akzeptiert.",
+      "invalid_url": "Gib eine URL ein, die mit http:// oder https:// beginnt.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Dieser Ingest-Key ist bereits eingerichtet.",
+      "reauth_successful": "Die erneute Authentifizierung war erfolgreich."
+    }
+  },
+  "entity": {
+    "notify": {
+      "alert": {
+        "name": "Alarm"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "PagerDeck war nicht erreichbar. Der Alarm wurde nicht gesendet."
+    },
+    "incident_not_found": {
+      "message": "Zu diesem Dedup-Key gibt es keinen offenen Vorfall."
+    },
+    "invalid_auth": {
+      "message": "PagerDeck hat den Ingest-Key abgelehnt. Authentifiziere die Integration erneut."
+    },
+    "invalid_request": {
+      "message": "PagerDeck hat die Anfrage abgelehnt: {message}"
+    },
+    "payment_required": {
+      "message": "Das PagerDeck-Konto hat keine Berechtigung, Alarme zu senden."
+    },
+    "rate_limited": {
+      "message": "PagerDeck drosselt diese Quelle. Erneut versuchen in {retry_after} Sekunden."
+    }
+  },
+  "services": {
+    "send_alert": {
+      "name": "Alarm senden",
+      "description": "Sendet einen Alarm an PagerDeck mit Schweregrad, Tags und Vorfallschlüssel.",
+      "fields": {
+        "message": {
+          "name": "Nachricht",
+          "description": "Text des Alarms. Wird als Titel verwendet, wenn kein Titel gesetzt ist."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Überschrift des Alarms, höchstens 250 Byte."
+        },
+        "severity": {
+          "name": "Schweregrad",
+          "description": "Vorgeschlagene Dringlichkeit. Ohne Angabe gilt die Voreinstellung der Quelle."
+        },
+        "tags": {
+          "name": "Tags",
+          "description": "Bis zu 20 Tags mit höchstens 64 Byte."
+        },
+        "dedup_key": {
+          "name": "Dedup-Key",
+          "description": "Hält einen Vorfall zusammen. Solange er offen ist, schreibt derselbe Key den ersten Alarm fort, statt einen neuen anzulegen."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Verweis, den die App öffnet. Nur http und https sind erlaubt."
+        },
+        "ttl": {
+          "name": "Gültigkeitsdauer",
+          "description": "Zustellfrist und Auto-Resolve, zwischen 1 Sekunde und 30 Tagen."
+        }
+      }
+    },
+    "resolve": {
+      "name": "Vorfall schließen",
+      "description": "Schließt den offenen Vorfall, der mit diesem Dedup-Key angelegt wurde.",
+      "fields": {
+        "dedup_key": {
+          "name": "Dedup-Key",
+          "description": "Der Key, mit dem der Vorfall geöffnet wurde."
+        }
+      }
+    }
+  }
+}

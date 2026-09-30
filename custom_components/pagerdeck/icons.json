@@ -1,0 +1,17 @@
+{
+  "entity": {
+    "notify": {
+      "alert": {
+        "default": "mdi:bell-alert"
+      }
+    }
+  },
+  "services": {
+    "send_alert": {
+      "service": "mdi:bell-ring"
+    },
+    "resolve": {
+      "service": "mdi:bell-check"
+    }
+  }
+}
