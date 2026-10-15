@@ -1,5 +1,11 @@
 # PagerDeck for Home Assistant
 
+> **This repository is archived.** PagerDeck integrations, including Home
+> Assistant, are now maintained in
+> [PagerDeck/integrations](https://github.com/PagerDeck/integrations). Setup
+> instructions:
+> [pagerdeck.com/integrations/home-assistant](https://pagerdeck.com/integrations/home-assistant).
+
 Send alerts from Home Assistant to [PagerDeck](https://pagerdeck.com). The
 integration adds a `notify` entity and two actions: `pagerdeck.send_alert` and
 `pagerdeck.resolve`.
